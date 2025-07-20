@@ -1,0 +1,18 @@
+name: 📈 Análise de Jogos
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: pip3 install -r requirements.txt
+      - name: Run analysis
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+        run: python3 bot.py --mode scheduled
